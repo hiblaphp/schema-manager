@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema\Compilers\Utilities;
+namespace Hibla\Migrations\Schema\Compilers\Utilities;
 
 class MySQLForeignKeyCompiler extends ForeignKeyCompiler
 {

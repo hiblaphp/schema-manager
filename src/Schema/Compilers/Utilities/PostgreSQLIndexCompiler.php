@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema\Compilers\Utilities;
+namespace Hibla\Migrations\Schema\Compilers\Utilities;
 
-use Hibla\QueryBuilder\Schema\Column;
-use Hibla\QueryBuilder\Schema\IndexDefinition;
+use Hibla\Migrations\Schema\Column;
+use Hibla\Migrations\Schema\IndexDefinition;
 
 class PostgreSQLIndexCompiler extends IndexCompiler
 {

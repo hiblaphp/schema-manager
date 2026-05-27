@@ -288,8 +288,8 @@ class MakeMigrationCommand extends Command
 
         return "<?php
 
-use Hibla\QueryBuilder\Schema\Blueprint;
-use Hibla\QueryBuilder\Schema\Migration;
+use Hibla\Migrations\Schema\Blueprint;
+use Hibla\Migrations\Schema\Migration;
 
 use function Hibla\await;
 
@@ -325,8 +325,8 @@ return new class extends Migration
 
         return "<?php
 
-use Hibla\QueryBuilder\Schema\Blueprint;
-use Hibla\QueryBuilder\Schema\Migration;
+use Hibla\Migrations\Schema\Blueprint;
+use Hibla\Migrations\Schema\Migration;
 
 use function Hibla\await;
 
@@ -363,7 +363,7 @@ return new class extends Migration
 
         return "<?php
 
-use Hibla\QueryBuilder\Schema\Migration;
+use Hibla\Migrations\Schema\Migration;
 
 use function Hibla\await;
 

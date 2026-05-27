@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema\Compilers;
+namespace Hibla\Migrations\Schema\Compilers;
 
-use Hibla\QueryBuilder\Schema\Blueprint;
-use Hibla\QueryBuilder\Schema\Column;
-use Hibla\QueryBuilder\Schema\Compilers\Utilities\PostgreSQLDefaultValueCompiler;
-use Hibla\QueryBuilder\Schema\Compilers\Utilities\PostgreSQLForeignKeyCompiler;
-use Hibla\QueryBuilder\Schema\Compilers\Utilities\PostgreSQLIndexCompiler;
-use Hibla\QueryBuilder\Schema\Compilers\Utilities\PostgreSQLTypeMapper;
-use Hibla\QueryBuilder\Schema\ForeignKey;
-use Hibla\QueryBuilder\Schema\IndexDefinition;
-use Hibla\QueryBuilder\Schema\SchemaCompiler;
+use Hibla\Migrations\Schema\Blueprint;
+use Hibla\Migrations\Schema\Column;
+use Hibla\Migrations\Schema\Compilers\Utilities\PostgreSQLDefaultValueCompiler;
+use Hibla\Migrations\Schema\Compilers\Utilities\PostgreSQLForeignKeyCompiler;
+use Hibla\Migrations\Schema\Compilers\Utilities\PostgreSQLIndexCompiler;
+use Hibla\Migrations\Schema\Compilers\Utilities\PostgreSQLTypeMapper;
+use Hibla\Migrations\Schema\ForeignKey;
+use Hibla\Migrations\Schema\IndexDefinition;
+use Hibla\Migrations\Schema\SchemaCompiler;
 
 class PostgreSQLSchemaCompiler implements SchemaCompiler
 {

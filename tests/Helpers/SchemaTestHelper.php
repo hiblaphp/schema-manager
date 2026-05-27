@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Helpers;
 
 use Hibla\QueryBuilder\DB;
-use Hibla\QueryBuilder\Schema\SchemaBuilder;
+use Hibla\Migrations\Schema\SchemaBuilder;
 
 class SchemaTestHelper
 {

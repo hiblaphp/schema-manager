@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema;
+namespace Hibla\Migrations\Schema;
 
 use Hibla\Promise\Interfaces\PromiseInterface;
 use Hibla\QueryBuilder\DB;

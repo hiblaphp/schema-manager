@@ -8,7 +8,7 @@ use Hibla\Migrations\Console\Traits\InitializeDatabase;
 use Hibla\Migrations\Console\Traits\LoadsSchemaConfiguration;
 use Hibla\Migrations\Console\Traits\ValidateConnection;
 use Hibla\QueryBuilder\Exceptions\DatabaseConfigurationException;
-use Hibla\QueryBuilder\Schema\MigrationRepository;
+use Hibla\Migrations\Schema\MigrationRepository;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

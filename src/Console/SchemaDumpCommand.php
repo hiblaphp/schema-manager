@@ -6,8 +6,8 @@ namespace Hibla\Migrations\Console;
 
 use Hibla\Migrations\Console\Traits\LoadsSchemaConfiguration;
 use Hibla\Migrations\Console\Traits\ValidateConnection;
-use Hibla\QueryBuilder\Schema\MigrationRepository;
-use Hibla\QueryBuilder\Schema\States\SchemaState;
+use Hibla\Migrations\Schema\MigrationRepository;
+use Hibla\Migrations\Schema\States\SchemaState;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

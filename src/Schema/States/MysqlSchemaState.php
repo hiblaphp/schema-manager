@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema\States;
+namespace Hibla\Migrations\Schema\States;
 
-use Hibla\QueryBuilder\Traits\ExtractsConfigValues;
+use Hibla\Migrations\Traits\ExtractsConfigValues;
 
 class MySQLSchemaState extends SchemaState
 {

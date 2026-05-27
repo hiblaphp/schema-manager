@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\QueryBuilder\Schema\Column;
+use Hibla\Migrations\Schema\Column;
 
 describe('Column Class', function () {
     it('creates column with correct attributes', function () {

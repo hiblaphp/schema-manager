@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\QueryBuilder\Schema\Blueprint;
+use Hibla\Migrations\Schema\Blueprint;
 
 beforeEach(function () {
     initializeSchemaForSqlite();

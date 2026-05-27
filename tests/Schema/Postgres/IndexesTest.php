@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Hibla\QueryBuilder\DB;
-use Hibla\QueryBuilder\Schema\Blueprint;
+use Hibla\Migrations\Schema\Blueprint;
 
 beforeEach(function () {
     initializeSchemaForPostgres();

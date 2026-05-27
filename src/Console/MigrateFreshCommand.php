@@ -9,7 +9,7 @@ use Hibla\Migrations\Console\Traits\ProhibitsDestructiveCommands;
 use Hibla\Migrations\Console\Traits\ValidateConnection;
 use Hibla\QueryBuilder\DB;
 use Hibla\QueryBuilder\Exceptions\DatabaseConfigurationException;
-use Hibla\QueryBuilder\Schema\States\SchemaState;
+use Hibla\Migrations\Schema\States\SchemaState;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;

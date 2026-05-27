@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hibla\QueryBuilder\Schema\Compilers\Utilities;
+namespace Hibla\Migrations\Schema\Compilers\Utilities;
 
-use Hibla\QueryBuilder\Schema\Column;
+use Hibla\Migrations\Schema\Column;
 
 class PostgreSQLDefaultValueCompiler extends DefaultValueCompiler
 {
