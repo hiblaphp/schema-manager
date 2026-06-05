@@ -89,26 +89,6 @@ class SchemaTestHelper
                     \PDO::ATTR_EMULATE_PREPARES => false,
                 ],
             ],
-            'sqlite' => [
-                'driver' => 'sqlite',
-                'database' => $_ENV['SQLITE_DATABASE'] ?? ':memory:',
-                'options' => [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                ],
-            ],
-            'sqlsrv' => [
-                'driver' => 'sqlsrv',
-                'host' => $_ENV['SQLSRV_HOST'],
-                'port' => (int) ($_ENV['SQLSRV_PORT']),
-                'database' => $_ENV['SQLSRV_DATABASE'],
-                'username' => $_ENV['SQLSRV_USERNAME'],
-                'password' => $_ENV['SQLSRV_PASSWORD'],
-                'options' => [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                ],
-            ],
             default => throw new \InvalidArgumentException("Unsupported driver: {$driver}"),
         };
     }
