@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
 
+use function Hibla\await;
+
 beforeEach(function () {
-    initializeSchemaForMysql();
+    initializeSchema();
 });
 
 afterEach(function () {
@@ -17,44 +19,44 @@ describe('Stress Tests', function () {
         for ($i = 1; $i <= 5; $i++) {
             $tableName = "test_table_{$i}";
 
-            schema()->create($tableName, function (Blueprint $table) {
+            await(schema()->create($tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
-            })->wait();
+            }));
 
-            $exists = schema()->hasTable($tableName)->wait();
+            $exists = await(schema()->hasTable($tableName));
             expect($exists)->toBeTruthy();
 
-            schema()->drop($tableName)->wait();
+            await(schema()->drop($tableName));
 
-            $exists = schema()->hasTable($tableName)->wait();
+            $exists = await(schema()->hasTable($tableName));
             expect($exists)->toBeFalsy();
         }
     });
 
     it('handles multiple alterations in sequence', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-        })->wait();
+        }));
 
-        schema()->table('users', function (Blueprint $table) {
+        await(schema()->table('users', function (Blueprint $table) {
             $table->string('email')->nullable();
-        })->wait();
+        }));
 
-        schema()->table('users', function (Blueprint $table) {
+        await(schema()->table('users', function (Blueprint $table) {
             $table->index('email');
-        })->wait();
+        }));
 
-        schema()->table('users', function (Blueprint $table) {
+        await(schema()->table('users', function (Blueprint $table) {
             $table->renameColumn('name', 'full_name');
-        })->wait();
+        }));
 
-        schema()->table('users', function (Blueprint $table) {
+        await(schema()->table('users', function (Blueprint $table) {
             $table->integer('age')->default(0);
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 });

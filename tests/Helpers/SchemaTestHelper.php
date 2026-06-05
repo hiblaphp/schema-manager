@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace Tests\Helpers;
 
 use Hibla\QueryBuilder\DB;
+use Hibla\QueryBuilder\Enums\DatabaseDriver;
+use Hibla\QueryBuilder\Utilities\ConnectionFactory;
 use Hibla\Migrations\Schema\SchemaBuilder;
+use Hibla\Sql\SqlClientInterface;
+
+use function Hibla\await;
 
 class SchemaTestHelper
 {
+    private static ?SqlClientInterface $activeClient = null;
+
     private static array $testTables = [
         'users',
         'posts',
@@ -37,24 +44,39 @@ class SchemaTestHelper
     ];
 
     /**
-     * Initialize database with specific driver configuration from environment variables
-     *
-     * @param string $driver The database driver (mysql, pgsql, sqlite, sqlsrv)
-     * @param int $poolSize Connection pool size (default: 10)
+     * Initialize database with specific driver configuration from environment variables.
      */
-    public static function initializeDatabaseForDriver(string $driver, int $poolSize = 10): void
+    public static function initializeDatabaseForDriver(string $driver): void
     {
+        self::closeActiveClient();
         DB::reset();
-        $config = self::getDriverConfig($driver);
-        DB::init($config, $poolSize);
 
-        DB::rawExecute('SELECT 1')->wait();
+        $config = self::getDriverConfig($driver);
+        self::$activeClient = ConnectionFactory::make($config);
+
+        $driverEnum = match ($driver) {
+            'pgsql' => DatabaseDriver::Postgres,
+            default => DatabaseDriver::Mysql,
+        };
+
+        DB::setSqlClient(self::$activeClient, $driverEnum);
+
+        await(DB::rawExecute('SELECT 1'));
     }
 
     /**
-     * Get configuration array for specific driver from environment variables
-     *
-     * @param string $driver The database driver
+     * Gracefully close the active database pool if one is running.
+     */
+    public static function closeActiveClient(): void
+    {
+        if (self::$activeClient !== null) {
+            self::$activeClient->close();
+            self::$activeClient = null;
+        }
+    }
+
+    /**
+     * Get configuration array for specific driver from environment variables.
      *
      * @return array<string, mixed>
      */
@@ -63,39 +85,23 @@ class SchemaTestHelper
         return match ($driver) {
             'mysql' => [
                 'driver' => 'mysql',
-                'host' => $_ENV['MYSQL_HOST'],
-                'port' => (int) ($_ENV['MYSQL_PORT']),
-                'database' => $_ENV['MYSQL_DATABASE'],
-                'username' => $_ENV['MYSQL_USERNAME'],
-                'password' => $_ENV['MYSQL_PASSWORD'],
+                'host' => $_ENV['MYSQL_HOST'] ?? '127.0.0.1',
+                'port' => (int) ($_ENV['MYSQL_PORT'] ?? 3306),
+                'database' => $_ENV['MYSQL_DATABASE'] ?? 'test_db',
+                'username' => $_ENV['MYSQL_USERNAME'] ?? 'test_user',
+                'password' => $_ENV['MYSQL_PASSWORD'] ?? 'test_password',
                 'charset' => 'utf8mb4',
-                'options' => [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::ATTR_EMULATE_PREPARES => false,
-                ],
             ],
             'pgsql' => [
                 'driver' => 'pgsql',
-                'host' => $_ENV['PGSQL_HOST'],
-                'port' => (int) ($_ENV['PGSQL_PORT']),
-                'database' => $_ENV['PGSQL_DATABASE'],
-                'username' => $_ENV['PGSQL_USERNAME'],
-                'password' => $_ENV['PGSQL_PASSWORD'],
-                'charset' => 'utf8',
-                'options' => [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::ATTR_EMULATE_PREPARES => false,
-                ],
+                'host' => $_ENV['PGSQL_HOST'] ?? '127.0.0.1',
+                'port' => (int) ($_ENV['PGSQL_PORT'] ?? 5443),
+                'database' => $_ENV['PGSQL_DATABASE'] ?? 'test_db',
+                'username' => $_ENV['PGSQL_USERNAME'] ?? 'postgres',
+                'password' => $_ENV['PGSQL_PASSWORD'] ?? 'postgres',
             ],
             default => throw new \InvalidArgumentException("Unsupported driver: {$driver}"),
         };
-    }
-
-    public static function initializeDatabase(): void
-    {
-        DB::rawExecute('SELECT 1')->wait();
     }
 
     public static function createSchemaBuilder(?string $driver = null): SchemaBuilder
@@ -107,8 +113,8 @@ class SchemaTestHelper
     {
         foreach (self::$testTables as $table) {
             try {
-                $schema->dropIfExists($table)->wait();
-            } catch (\Exception $e) {
+                await($schema->dropIfExists($table));
+            } catch (\Throwable $e) {
                 // Ignore if table doesn't exist
             }
         }

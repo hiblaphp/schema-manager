@@ -2,45 +2,34 @@
 
 declare(strict_types=1);
 
+use Hibla\Migrations\Schema\SchemaBuilder;
 use Hibla\QueryBuilder\DB;
 use Tests\Helpers\SchemaTestHelper;
 
-pest()->extend(Tests\TestCase::class)->in('Feature');
-pest()->extend(Tests\TestCase::class)->in('Stress');
-pest()->extend(Tests\TestCase::class)->in('Unit');
-pest()->extend(Tests\TestCase::class)->in('Integration');
-
-function schema(?string $driver = null)
+function driver(): string
 {
-    return SchemaTestHelper::createSchemaBuilder($driver);
+    return strtolower(getenv('DATABASE') ?: 'mysql');
 }
 
-function initializeSchemaForSqlite()
+function schema(?string $driver = null): SchemaBuilder
 {
-    SchemaTestHelper::initializeDatabaseForDriver('sqlite');
-    SchemaTestHelper::cleanupTables(schema('sqlite'));
+    return SchemaTestHelper::createSchemaBuilder($driver ?? driver());
 }
 
-function initializeSchemaForMysql()
+function initializeSchema(): void
 {
-    SchemaTestHelper::initializeDatabaseForDriver('mysql');
+    SchemaTestHelper::initializeDatabaseForDriver(driver());
     SchemaTestHelper::cleanupTables(schema());
 }
 
-function initializeSchemaForPostgres()
+function cleanupSchema(): void
 {
-    SchemaTestHelper::initializeDatabaseForDriver('pgsql');
-    SchemaTestHelper::cleanupTables(schema('pgsql'));
-}
+    try {
+        SchemaTestHelper::cleanupTables(schema());
+    } catch (\Throwable $e) {
+        // Ignore errors during cleanup
+    }
 
-function initializeSchemaForSqlServer()
-{
-    SchemaTestHelper::initializeDatabaseForDriver('sqlsrv');
-    SchemaTestHelper::cleanupTables(schema('sqlsrv'));
-}
-
-function cleanupSchema(?string $driver = null)
-{
-    SchemaTestHelper::cleanupTables(schema($driver));
+    SchemaTestHelper::closeActiveClient();
     DB::reset();
 }

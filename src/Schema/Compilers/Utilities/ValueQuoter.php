@@ -4,26 +4,13 @@ declare(strict_types=1);
 
 namespace Hibla\Migrations\Schema\Compilers\Utilities;
 
-use PDO;
-
 /**
- * Handles string quoting and escaping
+ * Handles string quoting and escaping for DDL compilation
  */
 class ValueQuoter
 {
-    private ?PDO $connection = null;
-
-    public function __construct(?PDO $connection = null)
-    {
-        $this->connection = $connection;
-    }
-
     public function quote(string $value): string
     {
-        if ($this->connection !== null) {
-            return $this->connection->quote($value);
-        }
-
         return $this->escapeAndQuote($value);
     }
 

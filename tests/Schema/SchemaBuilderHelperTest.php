@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
 
+use function Hibla\await;
+
 beforeEach(function () {
-    initializeSchemaForMysql();
+    initializeSchema();
 });
 
 afterEach(function () {
@@ -14,57 +16,57 @@ afterEach(function () {
 
 describe('SchemaBuilder Helper Methods', function () {
     it('uses dropColumn helper method', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
-        })->wait();
+        }));
 
-        schema()->dropColumn('users', 'email')->wait();
+        await(schema()->dropColumn('users', 'email'));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 
     it('uses renameColumn helper method', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-        })->wait();
+        }));
 
-        schema()->renameColumn('users', 'name', 'full_name')->wait();
+        await(schema()->renameColumn('users', 'name', 'full_name'));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 
     it('uses dropIndex helper method', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->index();
-        })->wait();
+        }));
 
-        schema()->dropIndex('users', 'users_email_index')->wait();
+        await(schema()->dropIndex('users', 'users_email_index'));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 
     it('uses dropForeign helper method', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-        })->wait();
+        }));
 
-        schema()->create('posts', function (Blueprint $table) {
+        await(schema()->create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title');
-        })->wait();
+        }));
 
-        schema()->dropForeign('posts', 'posts_user_id_foreign')->wait();
+        await(schema()->dropForeign('posts', 'posts_user_id_foreign'));
 
-        $exists = schema()->hasTable('posts')->wait();
+        $exists = await(schema()->hasTable('posts'));
         expect($exists)->toBeTruthy();
     });
 });

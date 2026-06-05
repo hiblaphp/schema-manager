@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
 
+use function Hibla\await;
+
 beforeEach(function () {
-    initializeSchemaForMysql();
+    initializeSchema();
 });
 
 afterEach(function () {
@@ -14,23 +16,23 @@ afterEach(function () {
 
 describe('Complex Scenarios', function () {
     it('creates a complete blog schema', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
             $table->softDeletes();
-        })->wait();
+        }));
 
-        schema()->create('categories', function (Blueprint $table) {
+        await(schema()->create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
             $table->timestamps();
-        })->wait();
+        }));
 
-        schema()->create('posts', function (Blueprint $table) {
+        await(schema()->create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
@@ -45,20 +47,20 @@ describe('Complex Scenarios', function () {
 
             $table->index(['user_id', 'is_published']);
             $table->fullText(['title', 'content']);
-        })->wait();
+        }));
 
-        schema()->create('comments', function (Blueprint $table) {
+        await(schema()->create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->text('content');
             $table->timestamps();
-        })->wait();
+        }));
 
-        $usersExists = schema()->hasTable('users')->wait();
-        $categoriesExists = schema()->hasTable('categories')->wait();
-        $postsExists = schema()->hasTable('posts')->wait();
-        $commentsExists = schema()->hasTable('comments')->wait();
+        $usersExists = await(schema()->hasTable('users'));
+        $categoriesExists = await(schema()->hasTable('categories'));
+        $postsExists = await(schema()->hasTable('posts'));
+        $commentsExists = await(schema()->hasTable('comments'));
 
         expect($usersExists)->toBeTruthy();
         expect($categoriesExists)->toBeTruthy();
@@ -67,24 +69,24 @@ describe('Complex Scenarios', function () {
     });
 
     it('performs multiple alterations on a table', function () {
-        schema()->dropIfExists('users')->wait();
+        await(schema()->dropIfExists('users'));
 
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('old_email');
             $table->integer('age');
-        })->wait();
+        }));
 
-        schema()->table('users', function (Blueprint $table) {
+        await(schema()->table('users', function (Blueprint $table) {
             $table->renameColumn('old_email', 'email');
             $table->dropColumn('age');
             $table->string('phone')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unique('email');
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 });

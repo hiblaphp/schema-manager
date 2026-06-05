@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
 
+use function Hibla\await;
+
 beforeEach(function () {
-    initializeSchemaForMysql();
+    initializeSchema();
 });
 
 afterEach(function () {
@@ -14,32 +16,32 @@ afterEach(function () {
 
 describe('Edge Cases', function () {
     it('handles empty table creation', function () {
-        schema()->create('empty_table', function (Blueprint $table) {
+        await(schema()->create('empty_table', function (Blueprint $table) {
             $table->id();
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('empty_table')->wait();
+        $exists = await(schema()->hasTable('empty_table'));
         expect($exists)->toBeTruthy();
 
-        schema()->dropIfExists('empty_table')->wait();
+        await(schema()->dropIfExists('empty_table'));
     });
 
     it('handles table with many columns', function () {
-        schema()->create('wide_table', function (Blueprint $table) {
+        await(schema()->create('wide_table', function (Blueprint $table) {
             $table->id();
             for ($i = 1; $i <= 20; $i++) {
                 $table->string("column_{$i}")->nullable();
             }
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('wide_table')->wait();
+        $exists = await(schema()->hasTable('wide_table'));
         expect($exists)->toBeTruthy();
 
-        schema()->dropIfExists('wide_table')->wait();
+        await(schema()->dropIfExists('wide_table'));
     });
 
     it('handles dropping non-existent table gracefully', function () {
-        $result = schema()->dropIfExists('this_table_does_not_exist')->wait();
+        $result = await(schema()->dropIfExists('this_table_does_not_exist'));
         expect($result)->not->toThrow(Exception::class);
     });
 });

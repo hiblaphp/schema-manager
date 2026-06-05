@@ -3,58 +3,62 @@
 declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
+use Hibla\QueryBuilder\DB;
+
+use function Hibla\await;
 
 beforeEach(function () {
-    initializeSchemaForPostgres();
+    initializeSchema();
 });
 
 afterEach(function () {
-    cleanupSchema('pgsql');
+    cleanupSchema();
 });
 
 describe('Column Helper Methods', function () {
     it('uses foreignId helper correctly', function () {
-        schema('pgsql')->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-        })->wait();
+        }));
 
-        schema('pgsql')->create('posts', function (Blueprint $table) {
+
+        await(schema()->create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-        })->wait();
+        }));
 
-        $exists = schema('pgsql')->hasTable('posts')->wait();
+        $exists = await(schema()->hasTable('posts'));
         expect($exists)->toBeTruthy();
     });
 
     it('creates timestamps helper correctly', function () {
-        schema('pgsql')->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
-        })->wait();
+        }));
 
-        Hibla\QueryBuilder\DB::rawExecute(
+        await(DB::rawExecute(
             'INSERT INTO users (name) VALUES (?)',
             ['Test User']
-        )->wait();
+        ));
 
-        $user = Hibla\QueryBuilder\DB::rawFirst('SELECT * FROM users WHERE name = ?', ['Test User'])->wait();
+        $user = await(DB::rawFirst('SELECT * FROM users WHERE name = ?', ['Test User']));
 
         expect($user['created_at'])->not->toBeNull();
         expect($user['updated_at'])->not->toBeNull();
     });
 
     it('creates softDeletes helper correctly', function () {
-        schema('pgsql')->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
-        })->wait();
+        }));
 
-        $exists = schema('pgsql')->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 });

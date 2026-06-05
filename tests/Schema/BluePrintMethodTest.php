@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Hibla\Migrations\Schema\Blueprint;
 
+use function Hibla\await;
+
 beforeEach(function () {
-    initializeSchemaForMysql();
+    initializeSchema();
 });
 
 afterEach(function () {
@@ -23,25 +25,25 @@ describe('Blueprint Methods', function () {
     });
 
     it('sets blueprint engine correctly', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->engine('MyISAM');
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 
     it('sets blueprint charset and collation correctly', function () {
-        schema()->create('users', function (Blueprint $table) {
+        await(schema()->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->charset('utf8');
             $table->collation('utf8_general_ci');
-        })->wait();
+        }));
 
-        $exists = schema()->hasTable('users')->wait();
+        $exists = await(schema()->hasTable('users'));
         expect($exists)->toBeTruthy();
     });
 });

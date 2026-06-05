@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hibla\Migrations\Schema\Compilers;
 
-use Hibla\Migrations\Exceptions\SchemaCompilerException;
 use Hibla\Migrations\Schema\Blueprint;
 use Hibla\Migrations\Schema\Column;
 use Hibla\Migrations\Schema\Compilers\Utilities\MySQLDefaultValueCompiler;
@@ -15,14 +14,9 @@ use Hibla\Migrations\Schema\Compilers\Utilities\ValueQuoter;
 use Hibla\Migrations\Schema\ForeignKey;
 use Hibla\Migrations\Schema\IndexDefinition;
 use Hibla\Migrations\Schema\SchemaCompiler;
-use PDO;
 
 class MySQLSchemaCompiler implements SchemaCompiler
 {
-    private const MINIMUM_VERSION = '8.0';
-
-    private ?PDO $connection = null;
-
     private MySQLTypeMapper $typeMapper;
 
     private MySQLDefaultValueCompiler $defaultCompiler;
@@ -40,49 +34,6 @@ class MySQLSchemaCompiler implements SchemaCompiler
         $this->indexCompiler = new MySQLIndexCompiler();
         $this->foreignKeyCompiler = new MySQLForeignKeyCompiler();
         $this->quoter = new ValueQuoter();
-    }
-
-    public function setConnection(?PDO $connection): void
-    {
-        $this->connection = $connection;
-        $this->quoter = new ValueQuoter($connection);
-        $this->validateMySQLVersion();
-    }
-
-    private function validateMySQLVersion(): void
-    {
-        if ($this->connection === null) {
-            return;
-        }
-
-        try {
-            $stmt = $this->connection->query('SELECT VERSION()');
-            if ($stmt === false) {
-                return;
-            }
-
-            $version = $stmt->fetchColumn();
-
-            if (! \is_string($version)) {
-                return;
-            }
-
-            if (preg_match('/^(\d+)\.(\d+)/', $version, $matches) !== 1) {
-                return;
-            }
-
-            $major = (int) $matches[1];
-
-            if ($major < 8) {
-                throw new SchemaCompilerException(
-                    "MySQL version {$version} is not supported. " .
-                        'This library requires MySQL ' . self::MINIMUM_VERSION . ' or higher. ' .
-                        'Please upgrade your MySQL server.'
-                );
-            }
-        } catch (\PDOException $e) {
-            // Connection error, let it fail naturally later
-        }
     }
 
     public function compileCreate(Blueprint $blueprint): string
