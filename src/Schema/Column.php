@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema;
+namespace Hibla\SchemaManager\Schema;
 
 use Carbon\Carbon;
 use Doctrine\Inflector\Inflector as DoctrineInflector;

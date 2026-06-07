@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Traits;
+namespace Hibla\SchemaManager\Traits;
 
 trait ExtractsConfigValues
 {

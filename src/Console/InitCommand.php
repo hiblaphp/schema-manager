@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Console;
+namespace Hibla\SchemaManager\Console;
 
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;

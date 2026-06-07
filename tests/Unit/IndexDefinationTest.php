@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Schema\IndexDefinition;
+use Hibla\SchemaManager\Schema\IndexDefinition;
 
 describe('IndexDefinition Class', function () {
     it('creates index definition with correct attributes', function () {

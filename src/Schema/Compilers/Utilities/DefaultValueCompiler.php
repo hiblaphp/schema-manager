@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema\Compilers\Utilities;
+namespace Hibla\SchemaManager\Schema\Compilers\Utilities;
 
-use Hibla\Migrations\Exceptions\SchemaCompilerException;
+use Hibla\SchemaManager\Exceptions\SchemaCompilerException;
 
 /**
  * Handles default value compilation for different database systems

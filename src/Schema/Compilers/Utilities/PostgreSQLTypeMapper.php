@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema\Compilers\Utilities;
+namespace Hibla\SchemaManager\Schema\Compilers\Utilities;
 
-use Hibla\Migrations\Schema\Column;
+use Hibla\SchemaManager\Schema\Column;
 
 /**
  * PostgreSQL-specific type mapping

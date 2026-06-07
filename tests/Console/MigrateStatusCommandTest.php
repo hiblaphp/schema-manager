@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Console\MigrateStatusCommand;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Console\MigrateStatusCommand;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

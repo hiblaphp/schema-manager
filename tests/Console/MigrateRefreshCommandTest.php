@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Console\MigrateRefreshCommand;
-use Hibla\Migrations\Console\MigrateResetCommand;
-use Hibla\Migrations\Console\MigrateRollbackCommand;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Console\MigrateRefreshCommand;
+use Hibla\SchemaManager\Console\MigrateResetCommand;
+use Hibla\SchemaManager\Console\MigrateRollbackCommand;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

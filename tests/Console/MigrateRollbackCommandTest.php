@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Console\MigrateRollbackCommand;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Console\MigrateRollbackCommand;
 use Hibla\QueryBuilder\DB;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
@@ -117,8 +117,8 @@ describe('MigrateRollbackCommand', function () {
         $timestamp = date('Y_m_d_His', time() + 5);
         $fileName = "{$timestamp}_create_new_name_table.php";
         $content = "<?php
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Migration;
 use function Hibla\await;
 
 return new class extends Migration {

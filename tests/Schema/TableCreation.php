@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Blueprint;
 
 use function Hibla\await;
 

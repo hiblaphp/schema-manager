@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Console\InitCommand;
+use Hibla\SchemaManager\Console\InitCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

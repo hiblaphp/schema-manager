@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Console\MakeSeederCommand;
+use Hibla\SchemaManager\Console\MakeSeederCommand;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

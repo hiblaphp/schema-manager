@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Console;
+namespace Hibla\SchemaManager\Console;
 
-use Hibla\Migrations\Console\Traits\LoadsSeederConfiguration;
-use Hibla\Migrations\Schema\Seeder;
+use Hibla\SchemaManager\Console\Traits\LoadsSeederConfiguration;
+use Hibla\SchemaManager\Schema\Seeder;
 use Hibla\QueryBuilder\Utilities\ConfigResolver;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema\Compilers\Utilities;
+namespace Hibla\SchemaManager\Schema\Compilers\Utilities;
 
-use Hibla\Migrations\Exceptions\SchemaCompilerException;
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Column;
-use Hibla\Migrations\Schema\ForeignKey;
-use Hibla\Migrations\Schema\IndexDefinition;
-use Hibla\Migrations\Schema\SchemaCompiler;
+use Hibla\SchemaManager\Exceptions\SchemaCompilerException;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Column;
+use Hibla\SchemaManager\Schema\ForeignKey;
+use Hibla\SchemaManager\Schema\IndexDefinition;
+use Hibla\SchemaManager\Schema\SchemaCompiler;
 
 class SQLiteIndexCompiler extends IndexCompiler
 {

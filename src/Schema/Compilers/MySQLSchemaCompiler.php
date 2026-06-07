@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema\Compilers;
+namespace Hibla\SchemaManager\Schema\Compilers;
 
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Column;
-use Hibla\Migrations\Schema\Compilers\Utilities\MySQLDefaultValueCompiler;
-use Hibla\Migrations\Schema\Compilers\Utilities\MySQLForeignKeyCompiler;
-use Hibla\Migrations\Schema\Compilers\Utilities\MySQLIndexCompiler;
-use Hibla\Migrations\Schema\Compilers\Utilities\MySQLTypeMapper;
-use Hibla\Migrations\Schema\Compilers\Utilities\ValueQuoter;
-use Hibla\Migrations\Schema\ForeignKey;
-use Hibla\Migrations\Schema\IndexDefinition;
-use Hibla\Migrations\Schema\SchemaCompiler;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Column;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\MySQLDefaultValueCompiler;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\MySQLForeignKeyCompiler;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\MySQLIndexCompiler;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\MySQLTypeMapper;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\ValueQuoter;
+use Hibla\SchemaManager\Schema\ForeignKey;
+use Hibla\SchemaManager\Schema\IndexDefinition;
+use Hibla\SchemaManager\Schema\SchemaCompiler;
 
 class MySQLSchemaCompiler implements SchemaCompiler
 {

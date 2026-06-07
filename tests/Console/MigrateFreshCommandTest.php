@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Console\MigrateFreshCommand;
-use Hibla\Migrations\Schema\Blueprint;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Console\MigrateFreshCommand;
+use Hibla\SchemaManager\Schema\Blueprint;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

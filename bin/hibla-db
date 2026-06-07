@@ -3,20 +3,20 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Hibla\Migrations\Console\DbSeedCommand;
+use Hibla\SchemaManager\Console\DbSeedCommand;
 use Symfony\Component\Console\Application;
-use Hibla\Migrations\Console\InitCommand;
-use Hibla\Migrations\Console\PublishTemplatesCommand;
-use Hibla\Migrations\Console\MakeMigrationCommand;
-use Hibla\Migrations\Console\MakeSeederCommand;
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Console\MigrateRollbackCommand;
-use Hibla\Migrations\Console\MigrateResetCommand;
-use Hibla\Migrations\Console\MigrateRefreshCommand;
-use Hibla\Migrations\Console\MigrateFreshCommand;
-use Hibla\Migrations\Console\MigrateStatusCommand;
-use Hibla\Migrations\Console\SchemaDumpCommand; 
-use Hibla\Migrations\Console\StatusCommand;
+use Hibla\SchemaManager\Console\InitCommand;
+use Hibla\SchemaManager\Console\PublishTemplatesCommand;
+use Hibla\SchemaManager\Console\MakeMigrationCommand;
+use Hibla\SchemaManager\Console\MakeSeederCommand;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Console\MigrateRollbackCommand;
+use Hibla\SchemaManager\Console\MigrateResetCommand;
+use Hibla\SchemaManager\Console\MigrateRefreshCommand;
+use Hibla\SchemaManager\Console\MigrateFreshCommand;
+use Hibla\SchemaManager\Console\MigrateStatusCommand;
+use Hibla\SchemaManager\Console\SchemaDumpCommand; 
+use Hibla\SchemaManager\Console\StatusCommand;
 
 $application = new Application('Hibla Database', '1.0.0');
 

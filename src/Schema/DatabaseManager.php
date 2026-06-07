@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema;
+namespace Hibla\SchemaManager\Schema;
 
-use Hibla\Migrations\Exceptions\SchemaMigrationException;
+use Hibla\SchemaManager\Exceptions\SchemaMigrationException;
 use Hibla\Promise\Interfaces\PromiseInterface;
 use Hibla\QueryBuilder\DB;
 use Hibla\QueryBuilder\Exceptions\DatabaseConfigurationException;

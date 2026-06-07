@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Console;
+namespace Hibla\SchemaManager\Console;
 
-use Hibla\Migrations\Console\Traits\InitializeDatabase;
-use Hibla\Migrations\Console\Traits\LoadsSchemaConfiguration;
-use Hibla\Migrations\Console\Traits\ValidateConnection;
-use Hibla\Migrations\Schema\DatabaseManager;
-use Hibla\Migrations\Schema\Migration;
-use Hibla\Migrations\Schema\MigrationRepository;
-use Hibla\Migrations\Schema\States\SchemaState;
+use Hibla\SchemaManager\Console\Traits\InitializeDatabase;
+use Hibla\SchemaManager\Console\Traits\LoadsSchemaConfiguration;
+use Hibla\SchemaManager\Console\Traits\ValidateConnection;
+use Hibla\SchemaManager\Schema\DatabaseManager;
+use Hibla\SchemaManager\Schema\Migration;
+use Hibla\SchemaManager\Schema\MigrationRepository;
+use Hibla\SchemaManager\Schema\States\SchemaState;
 use Hibla\QueryBuilder\DB;
 use Hibla\QueryBuilder\Exceptions\DatabaseConfigurationException;
 use Hibla\QueryBuilder\Interfaces\TransactionalQueryBuilderInterface;

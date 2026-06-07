@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema\Compilers;
+namespace Hibla\SchemaManager\Schema\Compilers;
 
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Column;
-use Hibla\Migrations\Schema\Compilers\Utilities\SQLiteIndexCompiler;
-use Hibla\Migrations\Schema\Compilers\Utilities\SQLiteTypeMapper;
-use Hibla\Migrations\Schema\ForeignKey;
-use Hibla\Migrations\Schema\IndexDefinition;
-use Hibla\Migrations\Schema\SchemaCompiler;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Column;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\SQLiteIndexCompiler;
+use Hibla\SchemaManager\Schema\Compilers\Utilities\SQLiteTypeMapper;
+use Hibla\SchemaManager\Schema\ForeignKey;
+use Hibla\SchemaManager\Schema\IndexDefinition;
+use Hibla\SchemaManager\Schema\SchemaCompiler;
 
 class SQLiteSchemaCompiler implements SchemaCompiler
 {

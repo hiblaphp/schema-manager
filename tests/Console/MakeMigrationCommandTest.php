@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Console\MakeMigrationCommand;
+use Hibla\SchemaManager\Console\MakeMigrationCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

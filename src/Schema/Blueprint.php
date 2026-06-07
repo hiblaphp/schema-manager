@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Schema;
+namespace Hibla\SchemaManager\Schema;
 
 use Hibla\QueryBuilder\Utilities\ConfigResolver;
 

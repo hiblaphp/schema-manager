@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Helpers;
 
-use Hibla\Migrations\Schema\SchemaBuilder;
+use Hibla\SchemaManager\Schema\SchemaBuilder;
 use Hibla\QueryBuilder\DB;
 use Hibla\QueryBuilder\Enums\DatabaseDriver;
 use Hibla\QueryBuilder\Utilities\ConnectionFactory;

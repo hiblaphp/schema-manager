@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Exceptions;
+namespace Hibla\SchemaManager\Exceptions;
 
 use Hibla\QueryBuilder\Exceptions\QueryBuilderException;
 

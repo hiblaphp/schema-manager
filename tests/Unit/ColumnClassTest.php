@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
-use Hibla\Migrations\Schema\Column;
+use Hibla\SchemaManager\Schema\Column;
 
 describe('Column Class', function () {
     it('creates column with correct attributes', function () {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\MigrateCommand;
-use Hibla\Migrations\Schema\Blueprint;
+use Hibla\SchemaManager\Console\MigrateCommand;
+use Hibla\SchemaManager\Schema\Blueprint;
 use Hibla\QueryBuilder\DB;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -124,7 +124,7 @@ return [
 
         $timestamp1 = date('Y_m_d_His');
         $insertContent = "<?php
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Migration;
 return new class extends Migration {
     public function up(): void {
         await(\$this->db('users')->insert(['name' => 'ShouldRollback']));
@@ -137,7 +137,7 @@ return new class extends Migration {
         sleep(0.1);
         $timestamp2 = date('Y_m_d_His');
         $failingContent = "<?php
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Migration;
 return new class extends Migration {
     public function up(): void {
         throw new \RuntimeException('Simulation of failure');

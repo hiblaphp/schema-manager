@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Console\Traits;
+namespace Hibla\SchemaManager\Console\Traits;
 
 use Hibla\QueryBuilder\Exceptions\DatabaseConfigurationException;
 use Hibla\QueryBuilder\Exceptions\InvalidConnectionConfigException;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Schema\ForeignKey;
+use Hibla\SchemaManager\Schema\ForeignKey;
 
 describe('ForeignKey Class', function () {
     it('creates foreign key with correct attributes', function () {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hibla\Migrations\Console;
+namespace Hibla\SchemaManager\Console;
 
 use Carbon\Carbon;
-use Hibla\Migrations\Console\Traits\LoadsSchemaConfiguration;
+use Hibla\SchemaManager\Console\Traits\LoadsSchemaConfiguration;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -288,8 +288,8 @@ class MakeMigrationCommand extends Command
 
         return "<?php
 
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Migration;
 
 use function Hibla\await;
 
@@ -325,8 +325,8 @@ return new class extends Migration
 
         return "<?php
 
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Migration;
 
 use function Hibla\await;
 
@@ -363,7 +363,7 @@ return new class extends Migration
 
         return "<?php
 
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Migration;
 
 use function Hibla\await;
 

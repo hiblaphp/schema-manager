@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Console;
 
-use Hibla\Migrations\Console\DbSeedCommand;
-use Hibla\Migrations\Schema\Blueprint;
+use Hibla\SchemaManager\Console\DbSeedCommand;
+use Hibla\SchemaManager\Schema\Blueprint;
 use Hibla\QueryBuilder\DB;
 use Rcalicdan\ConfigLoader\Config;
 use Symfony\Component\Console\Application;
@@ -20,7 +20,7 @@ function createTestSeeder(string $projectRoot, string $name, string $table, arra
     $dataExport = var_export($data, true);
 
     $content = "<?php
-use Hibla\Migrations\Schema\Seeder;
+use Hibla\SchemaManager\Schema\Seeder;
 use function Hibla\await;
 
 return new class extends Seeder {
@@ -107,7 +107,7 @@ describe('DbSeedCommand', function () {
 
         $dir = $tempDir . '/database/seeders';
         $masterContent = "<?php
-use Hibla\Migrations\Schema\Seeder;
+use Hibla\SchemaManager\Schema\Seeder;
 use function Hibla\await;
 
 return new class extends Seeder {

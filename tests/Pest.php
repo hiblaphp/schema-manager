@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Hibla\Migrations\Schema\SchemaBuilder;
+use Hibla\SchemaManager\Schema\SchemaBuilder;
 use Hibla\QueryBuilder\DB;
 use Tests\Helpers\SchemaTestHelper;
 
@@ -68,8 +68,8 @@ function createTestMigration(string $projectRoot, string $name, string $table, ?
         : '';
 
     $content = "<?php
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Migration;
 use function Hibla\await;
 
 return new class extends Migration {
