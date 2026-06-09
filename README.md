@@ -126,7 +126,7 @@ composer test:all
 
 ## Documentation
 
-For full documentation on available Blueprint column types, multi-connection migrations, production Safe Mode, and Schema Squashing (`schema:dump`), please read the **[Comprehensive Hibla Documentation](https://github.com/hiblaphp/database)**.
+For full documentation on available Blueprint column types, multi-connection migrations, production Safe Mode, and Schema Squashing (`schema:dump`), please read the **[Comprehensive Hibla Documentation](https://github.com/hiblaphp/database#schema-manager)**.
 
 ## License
 
