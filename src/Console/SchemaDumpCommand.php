@@ -55,7 +55,12 @@ class SchemaDumpCommand extends Command
             mkdir($schemaDirectory, 0755, true);
         }
 
-        $connectionName = $this->connection ?? 'mysql';
+        $dbConfig = ConfigResolver::getDatabaseConfig();
+        $defaultConnection = \is_array($dbConfig) && \is_string($dbConfig['default'] ?? null)
+            ? $dbConfig['default']
+            : 'mysql';
+
+        $connectionName = $this->connection ?? $defaultConnection;
         $path = "{$schemaDirectory}/{$connectionName}-schema.sql";
 
         $this->io->write("Dumping database schema to <comment>{$path}</comment>... ");

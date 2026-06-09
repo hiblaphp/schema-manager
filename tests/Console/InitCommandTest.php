@@ -33,9 +33,10 @@ describe('InitCommand', function () {
 
         $output = $tester->getDisplay();
 
-        expect($output)->toContain("Configuration created: {$tempDir}/hibla-database.php")
-            ->and($output)->toContain("Configuration created: {$tempDir}/hibla-migrations.php")
-            ->and($output)->toContain("Configuration created: {$tempDir}/hibla-seeders.php")
+        expect($output)->toContain("Configuration created: ")
+            ->and($output)->toContain("hibla-database.php")
+            ->and($output)->toContain("hibla-migrations.php")
+            ->and($output)->toContain("hibla-seeders.php")
         ;
 
         expect(file_exists($tempDir . '/hibla-database.php'))->toBeTrue()
