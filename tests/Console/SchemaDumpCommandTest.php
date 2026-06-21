@@ -17,10 +17,15 @@ use function Hibla\await;
  */
 function executableExists(string $command): bool
 {
-    $where = DIRECTORY_SEPARATOR === '\\' ? 'where' : 'which';
-    $output = shell_exec(escapeshellcmd("$where $command") . ' 2>&1');
+    $command = escapeshellarg($command);
 
-    return $output !== null && trim($output) !== '';
+    if (DIRECTORY_SEPARATOR === '\\') {
+        exec("where {$command} 2>NUL", $output, $exitCode);
+    } else {
+        exec("command -v {$command} 2>/dev/null", $output, $exitCode);
+    }
+
+    return $exitCode === 0 && $output !== [];
 }
 
 describe('SchemaDumpCommand', function () {
