@@ -72,7 +72,7 @@ class SQLiteIndexCompiler extends IndexCompiler
         $statements[] = "DROP TABLE `{$table}`";
         $statements[] = "ALTER TABLE `{$tempTable}` RENAME TO `{$table}`";
 
-        $dropIndexNames = array_map(fn ($idx) => $idx[0], $blueprint->getDropIndexes());
+        $dropIndexNames = array_map(fn($idx) => $idx[0], $blueprint->getDropIndexes());
         foreach ($blueprint->getIndexDefinitions() as $indexDef) {
             $indexName = $indexDef->getName();
             if ($indexDef->getType() !== 'PRIMARY' && ! \in_array($indexName, $dropIndexNames, true)) {
@@ -99,6 +99,8 @@ class SQLiteIndexCompiler extends IndexCompiler
         $modifyMap = $this->getModifyMap($originalBlueprint->getModifyColumns());
 
         foreach ($existingTableColumns as $existingCol) {
+            $existingCol = (array) $existingCol;
+
             if (! isset($existingCol['name']) || ! \is_string($existingCol['name'])) {
                 continue;
             }
@@ -137,7 +139,7 @@ class SQLiteIndexCompiler extends IndexCompiler
             $this->addColumnToBlueprint($newBlueprint, $clonedColumn);
         }
 
-        $dropIndexNames = array_map(fn ($idx) => $idx[0], $originalBlueprint->getDropIndexes());
+        $dropIndexNames = array_map(fn($idx) => $idx[0], $originalBlueprint->getDropIndexes());
         foreach ($originalBlueprint->getIndexDefinitions() as $indexDef) {
             $indexName = $indexDef->getName() ?? 'PRIMARY';
             if (! \in_array($indexName, $dropIndexNames, true)) {
@@ -236,6 +238,8 @@ class SQLiteIndexCompiler extends IndexCompiler
         $renameMap = $this->getRenameMap($blueprint->getRenameColumns());
 
         foreach ($existingTableColumns as $existingCol) {
+            $existingCol = (array) $existingCol;
+
             if (! isset($existingCol['name']) || ! \is_string($existingCol['name'])) {
                 continue;
             }
