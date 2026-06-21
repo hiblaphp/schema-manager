@@ -57,7 +57,6 @@ class SQLiteIndexCompiler extends IndexCompiler
         $tempTable = "temp_{$table}_" . bin2hex(random_bytes(4));
 
         $statements = [];
-        $statements[] = 'PRAGMA foreign_keys=OFF';
 
         $newBlueprint = $this->buildNewBlueprint($blueprint, $tempTable, $existingTableColumns);
         $statements[] = $compiler->compileCreate($newBlueprint);
@@ -72,7 +71,7 @@ class SQLiteIndexCompiler extends IndexCompiler
         $statements[] = "DROP TABLE `{$table}`";
         $statements[] = "ALTER TABLE `{$tempTable}` RENAME TO `{$table}`";
 
-        $dropIndexNames = array_map(fn($idx) => $idx[0], $blueprint->getDropIndexes());
+        $dropIndexNames = array_map(fn ($idx) => $idx[0], $blueprint->getDropIndexes());
         foreach ($blueprint->getIndexDefinitions() as $indexDef) {
             $indexName = $indexDef->getName();
             if ($indexDef->getType() !== 'PRIMARY' && ! \in_array($indexName, $dropIndexNames, true)) {
@@ -80,9 +79,6 @@ class SQLiteIndexCompiler extends IndexCompiler
                 $statements = array_merge($statements, $indexStatements);
             }
         }
-
-        $statements[] = 'PRAGMA foreign_key_check';
-        $statements[] = 'PRAGMA foreign_keys=ON';
 
         return $statements;
     }
@@ -139,7 +135,7 @@ class SQLiteIndexCompiler extends IndexCompiler
             $this->addColumnToBlueprint($newBlueprint, $clonedColumn);
         }
 
-        $dropIndexNames = array_map(fn($idx) => $idx[0], $originalBlueprint->getDropIndexes());
+        $dropIndexNames = array_map(fn ($idx) => $idx[0], $originalBlueprint->getDropIndexes());
         foreach ($originalBlueprint->getIndexDefinitions() as $indexDef) {
             $indexName = $indexDef->getName() ?? 'PRIMARY';
             if (! \in_array($indexName, $dropIndexNames, true)) {

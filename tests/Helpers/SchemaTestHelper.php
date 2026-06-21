@@ -116,7 +116,7 @@ class SchemaTestHelper
                 'username' => $_ENV['PGSQL_USERNAME'] ?? 'postgres',
                 'password' => $_ENV['PGSQL_PASSWORD'] ?? 'postgres',
             ],
-            'sqlite' => [ 
+            'sqlite' => [
                 'driver' => 'sqlite',
                 'database' => __DIR__ . '/../../database_' . getmypid() . '.sqlite',
                 'max_connections' => 2,

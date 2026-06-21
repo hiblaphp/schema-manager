@@ -82,14 +82,13 @@ class SchemaBuilder
         return async(function () use ($table, $callback) {
             $blueprint = new Blueprint($table);
             $callback($blueprint);
-
             $this->processColumnIndexes($blueprint);
 
             $compiler = $this->getCompiler();
             $sql = $compiler->compileCreate($blueprint);
 
             if ($this->driver === 'sqlite') {
-                return await($this->getSQLiteBuilder()->handleCreate($sql));
+                return await($this->getSQLiteBuilder()->handleCreate($sql, $this->getQueryClient()));
             }
 
             return await($this->getQueryClient()->rawExecute($sql, []));
@@ -151,13 +150,12 @@ class SchemaBuilder
         return async(function () use ($table, $callback) {
             $blueprint = new Blueprint($table);
             $callback($blueprint);
-
             $this->processColumnIndexes($blueprint);
 
             $compiler = $this->getCompiler();
 
             if ($this->driver === 'sqlite') {
-                $result = await($this->getSQLiteBuilder()->handleTable($table, $blueprint));
+                $result = await($this->getSQLiteBuilder()->handleTable($table, $blueprint, $this->getQueryClient()));
 
                 return \is_bool($result) ? null : $result;
             }
@@ -208,8 +206,7 @@ class SchemaBuilder
             $compiler = $this->getCompiler();
 
             if ($this->driver === 'sqlite') {
-                // Normalize bool → null: SQLite returns true when no statements were executed.
-                $result = await($this->getSQLiteBuilder()->handleDropColumn($table, $blueprint));
+                $result = await($this->getSQLiteBuilder()->handleDropColumn($table, $blueprint, $this->getQueryClient()));
 
                 return \is_bool($result) ? null : $result;
             }
@@ -272,8 +269,7 @@ class SchemaBuilder
             $compiler = $this->getCompiler();
 
             if ($this->driver === 'sqlite') {
-                // Normalize bool → null: SQLite returns true when no statements were executed.
-                $result = await($this->getSQLiteBuilder()->handleDropIndex($table, $blueprint));
+                $result = await($this->getSQLiteBuilder()->handleDropIndex($table, $blueprint, $this->getQueryClient()));
 
                 return \is_bool($result) ? null : $result;
             }
@@ -294,12 +290,12 @@ class SchemaBuilder
     }
 
     /**
-     * Drop a foreign key from a table.
-     *
-     * @param string|list<string> $foreignKey
-     *
-     * @return PromiseInterface<int|list<int>|null>
-     */
+       * Drop a foreign key from a table.
+       *
+       * @param string|list<string> $foreignKey
+       *
+       * @return PromiseInterface<int|list<int>|null>
+       */
     public function dropForeign(string $table, string|array $foreignKey): PromiseInterface
     {
         return async(function () use ($table, $foreignKey) {
@@ -309,7 +305,7 @@ class SchemaBuilder
             $compiler = $this->getCompiler();
 
             if ($this->driver === 'sqlite') {
-                $result = await($this->getSQLiteBuilder()->handleDropForeign($table, $blueprint));
+                $result = await($this->getSQLiteBuilder()->handleDropForeign($table, $blueprint, $this->getQueryClient()));
 
                 return \is_bool($result) ? null : $result;
             }

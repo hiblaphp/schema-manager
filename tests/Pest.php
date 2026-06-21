@@ -22,6 +22,7 @@ Defer::global(function () {
                 for ($i = 1; $i <= 10; $i++) {
                     if (@unlink($f)) {
                         $deleted = true;
+
                         break;
                     }
 
