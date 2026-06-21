@@ -27,7 +27,12 @@ describe('SchemaDumpCommand', function () {
     $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'hibla_dump_test_' . uniqid();
 
     beforeEach(function () use ($tempDir) {
-        $requiredExecutable = driver() === 'pgsql' ? 'pg_dump' : 'mysqldump';
+        $requiredExecutable = match (driver()) {
+            'pgsql' => 'pg_dump',
+            'sqlite' => 'sqlite3',
+            default => 'mysqldump',
+        };
+
         if (! executableExists($requiredExecutable)) {
             $this->markTestSkipped("The executable '{$requiredExecutable}' is not available on this host machine. Skipping dump test.");
         }

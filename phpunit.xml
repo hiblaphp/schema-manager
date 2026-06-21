@@ -11,6 +11,9 @@
         </include>
     </source>
     <php>
+        <!-- SQLite -->
+        <env name="DATABASE" value="sqlite" force="false"/>
+
         <!-- MySQL -->
         <env name="MYSQL_HOST" value="127.0.0.1" force="true"/>
         <env name="MYSQL_PORT" value="3306" force="true"/>

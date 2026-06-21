@@ -54,23 +54,24 @@ class SchemaTestHelper
         $config = self::getDriverConfig($driver);
 
         $_ENV['DB_CONNECTION'] = $driver;
-        $_ENV['DB_HOST'] = $config['host'];
-        $_ENV['DB_PORT'] = (string) $config['port'];
+        $_ENV['DB_HOST'] = $config['host'] ?? '127.0.0.1';
+        $_ENV['DB_PORT'] = (string) ($config['port'] ?? 3306);
         $_ENV['DB_DATABASE'] = $config['database'];
-        $_ENV['DB_USERNAME'] = $config['username'];
-        $_ENV['DB_PASSWORD'] = $config['password'];
+        $_ENV['DB_USERNAME'] = $config['username'] ?? 'root';
+        $_ENV['DB_PASSWORD'] = $config['password'] ?? '';
 
         $_SERVER['DB_CONNECTION'] = $driver;
-        $_SERVER['DB_HOST'] = $config['host'];
-        $_SERVER['DB_PORT'] = (string) $config['port'];
+        $_SERVER['DB_HOST'] = $config['host'] ?? '127.0.0.1';
+        $_SERVER['DB_PORT'] = (string) ($config['port'] ?? 3306);
         $_SERVER['DB_DATABASE'] = $config['database'];
-        $_SERVER['DB_USERNAME'] = $config['username'];
-        $_SERVER['DB_PASSWORD'] = $config['password'];
+        $_SERVER['DB_USERNAME'] = $config['username'] ?? 'root';
+        $_SERVER['DB_PASSWORD'] = $config['password'] ?? '';
 
         self::$activeClient = ConnectionFactory::make($config);
 
         $driverEnum = match ($driver) {
             'pgsql' => DatabaseDriver::Postgres,
+            'sqlite' => DatabaseDriver::Sqlite,
             default => DatabaseDriver::Mysql,
         };
 
@@ -114,6 +115,12 @@ class SchemaTestHelper
                 'database' => $_ENV['PGSQL_DATABASE'] ?? 'test_db',
                 'username' => $_ENV['PGSQL_USERNAME'] ?? 'postgres',
                 'password' => $_ENV['PGSQL_PASSWORD'] ?? 'postgres',
+            ],
+            'sqlite' => [ 
+                'driver' => 'sqlite',
+                'database' => __DIR__ . '/../../database_' . getmypid() . '.sqlite',
+                'max_connections' => 2,
+                'min_connections' => 1,
             ],
             default => throw new \InvalidArgumentException("Unsupported driver: {$driver}"),
         };

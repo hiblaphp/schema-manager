@@ -4,14 +4,37 @@ declare(strict_types=1);
 
 use Hibla\QueryBuilder\DB;
 use Hibla\SchemaManager\Schema\SchemaBuilder;
+use Rcalicdan\Defer\Defer;
 use Tests\Helpers\SchemaTestHelper;
 
 use function Hibla\await;
 use function Hibla\sleep;
 
+Defer::global(function () {
+    $pid = getmypid();
+
+    if (driver() === 'sqlite') {
+        $file = __DIR__ . '/../database_' . $pid . '.sqlite';
+        $files = [$file, $file . '-wal', $file . '-shm'];
+
+        foreach ($files as $f) {
+            if (file_exists($f)) {
+                for ($i = 1; $i <= 10; $i++) {
+                    if (@unlink($f)) {
+                        $deleted = true;
+                        break;
+                    }
+
+                    usleep(100000);
+                }
+            }
+        }
+    }
+});
+
 function driver(): string
 {
-    return strtolower(getenv('DATABASE') ?: 'mysql');
+    return strtolower(getenv('DATABASE') ?: 'sqlite');
 }
 
 function schema(?string $driver = null): SchemaBuilder

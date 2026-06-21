@@ -28,13 +28,18 @@
         "pestphp/pest": "^3.0",
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^2.1",
-        "phpstan/phpstan-strict-rules": "^2.0"
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "rcalicdan/defer": "^1.2"
     },
     "bin": [
         "bin/hibla-db"
     ],
     "scripts": {
         "test": "./vendor/bin/pest",
+        "test:sqlite": [
+            "@putenv DATABASE=sqlite",
+            "./vendor/bin/pest --compact"
+        ],
         "test:mysql": [
             "@putenv DATABASE=mysql",
             "./vendor/bin/pest --compact"
@@ -44,6 +49,7 @@
             "./vendor/bin/pest --compact"
         ],
         "test:all": [
+            "@test:sqlite",
             "@test:mysql",
             "@test:pgsql"
         ],
