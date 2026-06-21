@@ -9,9 +9,11 @@
 
 `hiblaphp/schema-manager` is a standalone database lifecycle management toolkit. It equips any PHP application or microframework with Laravel-style migrations, programmatic blueprints, asynchronous database seeders, and advanced production safeguards like "Safe Mode" and native Schema Dumping (Squashing).
 
+It supports **MySQL, PostgreSQL, and SQLite** out of the box. Notably, it fully overcomes SQLite's infamous `ALTER TABLE` limitations by safely orchestrating atomic table-recreation and index-preservation within asynchronous transactions automatically.
+
 ## Installation
 
->This package is currently in **beta**. Before installing, ensure your `composer.json`
+> This package is currently in **beta**. Before installing, ensure your `composer.json`
 allows beta releases:
 
 Install the package via Composer. *(This automatically installs the required `hiblaphp/query-builder` dependency).*
@@ -29,6 +31,8 @@ Run the initialization command to auto-scaffold your configuration files:
 
 ## Quick Start
 
+> **Zero-Config Default:** By default, Hibla resolves to an in-memory SQLite database (`:memory:`), meaning you can start running migrations and seeders immediately without configuring a database server!
+
 ### 1. Create a Migration
 Generate your first migration using the CLI. The command automatically detects table creation intents based on the name:
 
@@ -41,8 +45,8 @@ This generates a safe, anonymous class in your `database/migrations` folder:
 ```php
 <?php
 
-use Hibla\Migrations\Schema\Blueprint;
-use Hibla\Migrations\Schema\Migration;
+use Hibla\SchemaManager\Schema\Blueprint;
+use Hibla\SchemaManager\Schema\Migration;
 use function Hibla\await;
 
 return new class extends Migration {
@@ -80,7 +84,7 @@ Seed your data using highly optimized, asynchronous queries:
 ```php
 <?php
 
-use Hibla\Migrations\Schema\Seeder;
+use Hibla\SchemaManager\Schema\Seeder;
 use function Hibla\await;
 
 return new class extends Seeder {
@@ -101,17 +105,21 @@ Run your seeders:
 
 ## Testing & Development
 
-Because the Schema Manager tests native table alterations, foreign key bindings, and schema state dumping, the test suite requires real databases to run against. A `docker-compose.yml` file is provided to quickly spin up the necessary environments.
+Because the Schema Manager tests native table alterations, foreign key bindings, and schema state dumping, the test suite requires real databases to run against. A `docker-compose.yml` file is provided to quickly spin up the necessary environments for MySQL and PostgreSQL.
 
-### 1. Start the Database Containers
+### 1. SQLite Testing (Zero Setup)
+To run the SQLite test suite, no external database engines or Docker setups are required. Simply execute:
+```bash
+composer test:sqlite
+```
+
+### 2. Start the External Database Containers
 Start the MySQL 8 and PostgreSQL 15 containers:
 ```bash
 docker compose up -d
 ```
 
-### 2. Run the Test Suite
-The repository uses [Pest PHP](https://pestphp.com/) for testing. 
-
+### 3. Run the Suite
 To run the tests against MySQL:
 ```bash
 composer test:mysql
@@ -122,7 +130,7 @@ To run the tests against PostgreSQL:
 composer test:pgsql
 ```
 
-To run the tests against both databases sequentially:
+To run the tests against all three databases sequentially:
 ```bash
 composer test:all
 ```
